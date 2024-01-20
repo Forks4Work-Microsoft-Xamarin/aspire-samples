@@ -17,4 +17,32 @@
     <ProjectReference Include="..\eShopLite.BasketService\eShopLite.BasketService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!--
+    -->
+    <ProjectReference
+      Include="..\eShopLite.AppMAUI\eShopLite.AppMAUI.csproj"
+      SkipGetTargetFrameworkProperties="true"
+      ReferenceOutputAssembly="false"
+    >
+    </ProjectReference>
+  </ItemGroup>
+
+
+  <PropertyGroup>
+    <!--
+    TODO maybe custom task
+    -->
+    <__BRAINSTORMING__>true</__BRAINSTORMING__>
+    <!--
+    CLI options/props + Environment Variables might be OK
+    -->
+    <DefineConstants>$(DefineConstants);__BRAINSTORMING__=$(__BRAINSTORMING__)</DefineConstants>
+    <DefineConstants 
+      Condition="'$(__BRAINSTORMING__)'=='true'"
+      >
+      $(DefineConstants);__BRAINSTORMING__
+    </DefineConstants>
+  </PropertyGroup>
+
 </Project>
