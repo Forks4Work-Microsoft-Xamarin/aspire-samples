@@ -12,7 +12,27 @@
                                 + " " +
                                 "-no-boot-anim"
                             );
+System.Diagnostics.Process.Start
+                            (
+                                "/Users/moljac/Library/Android/sdk/emulator/emulator",      
+                                //"-avd Nexus_9_API_33"
+                                "-avd nexus_9_api_33"
+                                // https://developer.android.com/studio/run/emulator-commandline
+                                + " " +
+                                "-no-cache" 
+                                + " " +
+                                "-gpu on"
+                                + " " +
+                                "-no-snapshot-load"
+                                + " " +
+                                "-no-boot-anim"
+                            );
 System.Threading.Thread.Sleep(10000);
+
+string project_maui = "..\\eShopLite.AppMAUI\\eShopLite.AppMAUI.csproj";
+
+project_maui = "..\\..\\..\\..\\..\\dotnet-architecture\\eshop-mobile-client\\m\\eShopOnContainers\\eShopOnContainers.csproj";
+IDistributedApplicationBuilderExtensions.project_maui = project_maui;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -40,7 +60,7 @@ System.Diagnostics.Process.Start
 
 /*
 */
-builder.AddProject("frontend_client_maui", "..\\eShopLite.AppMAUI\\eShopLite.AppMAUI.csproj")
+builder.AddProject("frontend_client_maui", project_maui)
     .WithReference(basketService)
     .WithReference(catalogService);
 
@@ -59,6 +79,7 @@ builder
 
 public static partial class IDistributedApplicationBuilderExtensions
 {
+    public static string project_maui;
     private static IDistributedApplicationBuilder? b;
     private static List<(string tfm, string device)> devices = new List<(string tfm, string device)>();
      
@@ -92,17 +113,17 @@ public static partial class IDistributedApplicationBuilderExtensions
         System.Diagnostics.Process.Start
         (
             "dotnet",
-            "build -f:net8.0-maccatalyst -t:run ..\\\\eShopLite.AppMAUI\\\\eShopLite.AppMAUI.csproj"
+            $"build -f:net8.0-maccatalyst -t:run {project_maui}"
         );
         System.Diagnostics.Process.Start
         (
             "dotnet",
-            "build -f:net8.0-ios -t:run ..\\\\eShopLite.AppMAUI\\\\eShopLite.AppMAUI.csproj"
+            $"build -f:net8.0-ios -t:run {project_maui}"
         );
         System.Diagnostics.Process.Start
         (
             "dotnet",
-            "build -f:net8.0-android -t:run ..\\\\eShopLite.AppMAUI\\\\eShopLite.AppMAUI.csproj"
+            $"build -f:net8.0-android -t:run {project_maui}"
         );
 
         Parallel.ForEach
