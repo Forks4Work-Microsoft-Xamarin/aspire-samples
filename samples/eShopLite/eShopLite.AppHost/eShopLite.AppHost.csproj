@@ -20,14 +20,21 @@
   <ItemGroup>
     <!--
     -->
-    <ProjectReference
-      Include="..\eShopLite.AppMAUI\eShopLite.AppMAUI.csproj"
-      SkipGetTargetFrameworkProperties="true"
-      ReferenceOutputAssembly="false"
-    >
+    <ProjectReference 
+        Include="..\eShopLite.AppMAUI\eShopLite.AppMAUI.csproj" 
+        SkipGetTargetFrameworkProperties="true" 
+        ReferenceOutputAssembly="false"
+        >
     </ProjectReference>
+
+    <!--
+    -->
+    <ProjectReference Include="..\..\..\..\..\..\hw-tools\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\source\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\HolisticWare.Tools.Aspire.Hosting.Clients.Maui.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\hw-tools\HolisticWare.Tools.Devices\source\HolisticWare.Tools.Devices\HolisticWare.Tools.Devices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  </ItemGroup>
 
   <PropertyGroup>
     <!--
@@ -38,9 +45,7 @@
     CLI options/props + Environment Variables might be OK
     -->
     <DefineConstants>$(DefineConstants);__BRAINSTORMING__=$(__BRAINSTORMING__)</DefineConstants>
-    <DefineConstants 
-      Condition="'$(__BRAINSTORMING__)'=='true'"
-      >
+    <DefineConstants Condition="'$(__BRAINSTORMING__)'=='true'">
       $(DefineConstants);__BRAINSTORMING__
     </DefineConstants>
   </PropertyGroup>

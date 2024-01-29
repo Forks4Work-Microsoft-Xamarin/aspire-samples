@@ -1,139 +1,88 @@
-﻿System.Diagnostics.Process.Start
-                            (
-                                "/Users/moljac/Library/Android/sdk/emulator/emulator",
-                                "-avd Pixel_3a_API_34_extension_level_7_arm64-v8a"
-                                // https://developer.android.com/studio/run/emulator-commandline
-                                + " " +
-                                "-no-cache" 
-                                + " " +
-                                "-gpu on"
-                                + " " +
-                                "-no-snapshot-load"
-                                + " " +
-                                "-no-boot-anim"
-                            );
-System.Diagnostics.Process.Start
-                            (
-                                "/Users/moljac/Library/Android/sdk/emulator/emulator",      
-                                //"-avd Nexus_9_API_33"
-                                "-avd nexus_9_api_33"
-                                // https://developer.android.com/studio/run/emulator-commandline
-                                + " " +
-                                "-no-cache" 
-                                + " " +
-                                "-gpu on"
-                                + " " +
-                                "-no-snapshot-load"
-                                + " " +
-                                "-no-boot-anim"
-                            );
+using Aspire.Hosting;
+
+using HolisticWare.Aspire.Hosting.Maui;
+
+HolisticWare.Tools.Devices.Android.Emulator.Launch("nexus_9_api_33");
+HolisticWare.Tools.Devices.Android.Emulator.Launch("Pixel_3a_API_34_extension_level_7_arm64-v8a");
+    
 System.Threading.Thread.Sleep(10000);
 
 string project_maui = "..\\eShopLite.AppMAUI\\eShopLite.AppMAUI.csproj";
 
 project_maui = "..\\..\\..\\..\\..\\dotnet-architecture\\eshop-mobile-client\\m\\eShopOnContainers\\eShopOnContainers.csproj";
-IDistributedApplicationBuilderExtensions.project_maui = project_maui;
+IDistributedApplicationBuilderMauiExtensions.ProjectMaui = project_maui;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var catalogDb = builder.AddPostgresContainer("catalog").AddDatabase("catalogdb");
-var basketCache = builder.AddRedisContainer("basketcache");
+var catalogDb = builder
+                                                        .AddPostgresContainer("catalog")
+                                                        .AddDatabase("catalogdb");
+var basketCache = builder
+                                                        .AddRedisContainer("basketcache");
 
-var catalogService = builder.AddProject<Projects.eShopLite_CatalogService>("catalogservice")
-    .WithReference(catalogDb);
+var catalogService = builder
+                                                        .AddProject<Projects.eShopLite_CatalogService>("catalogservice")
+                                                        .WithReference(catalogDb);
 
-var basketService = builder.AddProject<Projects.eShopLite_BasketService>("basketservice")
-    .WithReference(basketCache);
+var basketService = builder
+                                                        .AddProject<Projects.eShopLite_BasketService>("basketservice")
+                                                        .WithReference(basketCache);
 
-builder.AddProject<Projects.eShopLite_Frontend>("frontend")
-    .WithReference(basketService)
-    .WithReference(catalogService);
-
-builder.AddProject<Projects.eShopLite_CatalogDbManager>("catalogdbmanager")
-    .WithReference(catalogDb);
-
-System.Diagnostics.Process.Start
-                            (
-                                "open",
-                                "-a \"Microsoft Edge\" -- http://localhost:15178"
-                            );
 
 /*
 */
-builder.AddProject("frontend_client_maui", project_maui)
+builder
+    .AddProject<Projects.eShopLite_Frontend>("frontend")
     .WithReference(basketService)
     .WithReference(catalogService);
 
 builder
-    .BuildMAUI("android","Pixel_3a_API_34_extension_level_7_arm64-v8a")
-    .BuildMAUI("ios","8DD23CF2-C0C4-4A5C-928C-4C8AC83EE8D0")
-    .BuildMAUI("maccatalyst")
+    .AddProject<Projects.eShopLite_CatalogDbManager>("catalogdbmanager")
+    .WithReference(catalogDb);
+
+
+/*
+*/
+builder
+    .AddProject
+            (
+                "frontend_client_maui", 
+                project_maui,
+                "net8.0-android",
+                "Pixel_3a_API_34_extension_level_7_arm64-v8a",
+                2
+            )
+    .WithReference(basketService)
+    .WithReference(catalogService);
+
+builder
+    .BuildClient
+            (
+                "net8.0-android",
+                "Pixel_3a_API_34_extension_level_7_arm64-v8a",
+                2
+            )
+    .BuildClient
+            (
+                "net8.0-android",
+                "Nexus_9_API_33"    // tablet
+                // default = 1
+            )
+    .BuildClient
+            (
+                "net8.0-ios",
+                "8DD23CF2-C0C4-4A5C-928C-4C8AC83EE8D0",                
+                2
+            )
+    .BuildClient
+            (
+                "net8.0-ios",
+                "4066B4FA-CCEF-4F1D-ABEA-BDE0E1471E33"  // iPad
+            )
+    .BuildClient("maccatalyst")
     ;
     
 builder
     .BuildDistributedAppWithClientsMAUI()    // injected MAUI + builder.Build();
     .Run()
     ;
-
-
-
-public static partial class IDistributedApplicationBuilderExtensions
-{
-    public static string project_maui;
-    private static IDistributedApplicationBuilder? b;
-    private static List<(string tfm, string device)> devices = new List<(string tfm, string device)>();
-     
-    public static
-        IDistributedApplicationBuilder
-                                        BuildMAUI(this IDistributedApplicationBuilder? builder, string tfm, string? device = null)
-    {
-        Console.WriteLine("mc++");
-        Console.WriteLine("     Inside Extension Method");
-        Console.WriteLine("         BuildMAUI");
-
-        b = builder;
-        devices.Add((tfm, device));
-        
-        return builder;
-    }
-
-    public static
-        DistributedApplication
-                                        BuildDistributedAppWithClientsMAUI(this IDistributedApplicationBuilder? builder)
-    {
-        Console.WriteLine("mc++");
-        Console.WriteLine("     Inside Extension Method");
-        Console.WriteLine("         RunMAUI");
-
-        foreach (var r in b.Resources)
-        {
-            string n = r.Name;
-        }
-
-        System.Diagnostics.Process.Start
-        (
-            "dotnet",
-            $"build -f:net8.0-maccatalyst -t:run {project_maui}"
-        );
-        System.Diagnostics.Process.Start
-        (
-            "dotnet",
-            $"build -f:net8.0-ios -t:run {project_maui}"
-        );
-        System.Diagnostics.Process.Start
-        (
-            "dotnet",
-            $"build -f:net8.0-android -t:run {project_maui}"
-        );
-
-        Parallel.ForEach
-        (
-            devices,
-            tuple =>
-            {
-            }
-        );
-
-        return builder.Build();   // can be called only once
-    }
-}

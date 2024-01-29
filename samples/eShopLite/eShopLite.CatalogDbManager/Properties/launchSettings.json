@@ -4,19 +4,19 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "health",
+      "applicationUrl": "http://localhost:52242",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:52242"
+      }
     },
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "health",
+      "applicationUrl": "https://localhost:52241;http://localhost:52242",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:52241;http://localhost:52242"
+      }
     }
   }
 }
