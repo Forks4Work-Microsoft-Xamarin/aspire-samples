@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolisticWare.Tools.Devices"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolisticWare.Tools.Aspire.Hosting.Clients.Maui", "..\..\..\..\..\hw-tools\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\source\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\HolisticWare.Tools.Aspire.Hosting.Clients.Maui.csproj", "{6A0D44A5-49AD-434B-93D4-73C6E8CDE951}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopLite.AppDefaults", "eShopLite.AppDefaults\eShopLite.AppDefaults.csproj", "{213A7C40-B290-4AB7-B6F4-6C94802FCFEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{6A0D44A5-49AD-434B-93D4-73C6E8CDE951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A0D44A5-49AD-434B-93D4-73C6E8CDE951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A0D44A5-49AD-434B-93D4-73C6E8CDE951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213A7C40-B290-4AB7-B6F4-6C94802FCFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213A7C40-B290-4AB7-B6F4-6C94802FCFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213A7C40-B290-4AB7-B6F4-6C94802FCFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213A7C40-B290-4AB7-B6F4-6C94802FCFEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
