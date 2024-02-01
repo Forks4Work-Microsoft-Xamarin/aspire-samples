@@ -26,28 +26,20 @@
         ReferenceOutputAssembly="false"
         >
     </ProjectReference>
-
-    <!--
-    -->
-    <ProjectReference Include="..\..\..\..\..\..\hw-tools\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\source\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\HolisticWare.Tools.Aspire.Hosting.Clients.Maui.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\hw-tools\HolisticWare.Tools.Devices\source\HolisticWare.Tools.Devices\HolisticWare.Tools.Devices.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <!--
+    <ProjectReference Include="..\..\..\..\..\..\hw-tools\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\source\HolisticWare.Tools.Aspire.Hosting.Clients.Maui\HolisticWare.Tools.Aspire.Hosting.Clients.Maui.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\hw-tools\HolisticWare.Tools.Devices\source\HolisticWare.Tools.Devices\HolisticWare.Tools.Devices.csproj" />
+    -->
   </ItemGroup>
 
-  <PropertyGroup>
-    <!--
-    TODO maybe custom task
-    -->
-    <__BRAINSTORMING__>true</__BRAINSTORMING__>
-    <!--
-    CLI options/props + Environment Variables might be OK
-    -->
-    <DefineConstants>$(DefineConstants);__BRAINSTORMING__=$(__BRAINSTORMING__)</DefineConstants>
-    <DefineConstants Condition="'$(__BRAINSTORMING__)'=='true'">
-      $(DefineConstants);__BRAINSTORMING__
-    </DefineConstants>
-  </PropertyGroup>
+	<ItemGroup>
+		<!--
+		-->
+		<PackageReference Include="HolisticWare.Tools.Aspire.Hosting.Clients.Maui" VersionOverride="0.0.1-alpha-20240201130349" />
+		<PackageReference Include="HolisticWare.Tools.Devices" VersionOverride="0.0.1-alpha-20240131230324" />
+	</ItemGroup>
 
 </Project>
